@@ -54,15 +54,8 @@
       transition: all 0.25s ease;
     }
 
-    #yesBtn {
-      background: #ff4d6d;
-      color: white;
-      z-index: 3;
-    }
-
-    #noBtn {
-      background: #ccc;
-    }
+    #yesBtn { background: #ff4d6d; color: white; z-index: 3; }
+    #noBtn { background: #ccc; }
 
     .heart {
       position: absolute;
@@ -73,9 +66,26 @@
       pointer-events: none;
     }
 
+    .loveWord {
+      position: fixed;
+      top: 50%;
+      font-size: 20px;
+      color: #ff4d6d;
+      opacity: 0;
+      animation: floatSide 4s ease-out forwards;
+      pointer-events: none;
+      font-weight: bold;
+    }
+
     @keyframes floatUp {
       0% { transform: translateY(0); opacity: 1; }
       100% { transform: translateY(-110vh); opacity: 0; }
+    }
+
+    @keyframes floatSide {
+      0% { transform: translateY(-50%) scale(0.8); opacity: 0; }
+      20% { opacity: 1; }
+      100% { transform: translateY(-150%) scale(1.2); opacity: 0; }
     }
 
     #confetti {
@@ -97,7 +107,6 @@
 </head>
 
 <body>
-  <!-- Hidden YouTube player (starts on YES) -->
   <iframe
     id="song"
     width="0"
@@ -140,6 +149,14 @@
       "Okay now this hurts 😭",
     ];
 
+    const loveWords = [
+      "I love you 💖",
+      "You're amazing ✨",
+      "My favorite person 💕",
+      "Forever us 💘",
+      "So lucky to have you 🥹",
+    ];
+
     noBtn.addEventListener("click", () => {
       noClicks++;
       question.textContent =
@@ -164,8 +181,8 @@
     yesBtn.addEventListener("click", () => {
       card.innerHTML = `
         <h1>YAYYYY 💘</h1>
-        <p>Ethan is VERY happy right now.</p>
-        <p>You’re officially my Valentine ❤️</p>
+        <p>I knew you would say yes</p>
+        <p>Happy valentines day stink</p>
         <p style="font-size:18px;">Send Ethan a screenshot 💕</p>
       `;
 
@@ -174,7 +191,23 @@
 
       startConfetti();
       heartExplosion();
+      floatLoveWords();
     });
+
+    function floatLoveWords() {
+      loveWords.forEach((word, i) => {
+        const el = document.createElement("div");
+        el.className = "loveWord";
+        el.textContent = word;
+
+        const side = i % 2 === 0 ? "10px" : "calc(100vw - 160px)";
+        el.style.left = side;
+        el.style.animationDelay = i * 0.4 + "s";
+
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 4000);
+      });
+    }
 
     setInterval(() => {
       const heart = document.createElement("div");
