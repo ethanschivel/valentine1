@@ -64,7 +64,6 @@
       background: #ccc;
     }
 
-    /* Floating hearts */
     .heart {
       position: absolute;
       bottom: -20px;
@@ -75,17 +74,10 @@
     }
 
     @keyframes floatUp {
-      0% {
-        transform: translateY(0);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-110vh);
-        opacity: 0;
-      }
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-110vh); opacity: 0; }
     }
 
-    /* Confetti canvas */
     #confetti {
       position: fixed;
       top: 0;
@@ -95,15 +87,22 @@
       pointer-events: none;
       display: none;
     }
+
+    #countdown {
+      margin-top: 10px;
+      font-size: 16px;
+      color: #ff4d6d;
+    }
   </style>
 </head>
 
 <body>
-  <!-- Hidden YouTube autoplay music -->
+  <!-- Hidden YouTube player (starts on YES) -->
   <iframe
+    id="song"
     width="0"
     height="0"
-    src="https://www.youtube.com/embed/mANvg9R1xeI?autoplay=1&loop=1&playlist=mANvg9R1xeI"
+    src="https://www.youtube.com/embed/mANvg9R1xeI?loop=1&playlist=mANvg9R1xeI"
     frameborder="0"
     allow="autoplay"
   ></iframe>
@@ -118,6 +117,8 @@
 
     <button id="yesBtn">Yes 💖</button>
     <button id="noBtn">No 😢</button>
+
+    <div id="countdown"></div>
   </div>
 
   <script>
@@ -165,12 +166,16 @@
         <h1>YAYYYY 💘</h1>
         <p>Ethan is VERY happy right now.</p>
         <p>You’re officially my Valentine ❤️</p>
+        <p style="font-size:18px;">Send Ethan a screenshot 💕</p>
       `;
 
+      const song = document.getElementById("song");
+      song.src += "&autoplay=1";
+
       startConfetti();
+      heartExplosion();
     });
 
-    // Floating hearts
     setInterval(() => {
       const heart = document.createElement("div");
       heart.classList.add("heart");
@@ -178,11 +183,31 @@
       heart.style.left = Math.random() * 100 + "vw";
       heart.style.fontSize = Math.random() * 20 + 20 + "px";
       document.body.appendChild(heart);
-
       setTimeout(() => heart.remove(), 5000);
     }, 300);
 
-    // 🎉 Confetti effect
+    function heartExplosion() {
+      for (let i = 0; i < 40; i++) {
+        const heart = document.createElement("div");
+        heart.textContent = "💖";
+        heart.style.position = "fixed";
+        heart.style.left = "50%";
+        heart.style.top = "50%";
+        heart.style.fontSize = "30px";
+        heart.style.transform = `translate(-50%, -50%) rotate(${Math.random()*360}deg)`;
+        heart.style.transition = "all 1s ease-out";
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.style.left = Math.random() * 100 + "vw";
+          heart.style.top = Math.random() * 100 + "vh";
+          heart.style.opacity = "0";
+        }, 10);
+
+        setTimeout(() => heart.remove(), 1000);
+      }
+    }
+
     function startConfetti() {
       confettiCanvas.style.display = "block";
       confettiCanvas.width = window.innerWidth;
@@ -190,27 +215,18 @@
 
       const pieces = Array.from({ length: 150 }).map(() => ({
         x: Math.random() * confettiCanvas.width,
-        y:
-          Math.random() * confettiCanvas.height -
-          confettiCanvas.height,
+        y: Math.random() * confettiCanvas.height - confettiCanvas.height,
         r: Math.random() * 6 + 4,
         d: Math.random() * 2 + 1,
       }));
 
       function draw() {
-        ctx.clearRect(
-          0,
-          0,
-          confettiCanvas.width,
-          confettiCanvas.height
-        );
-
+        ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
         pieces.forEach((p) => {
           ctx.beginPath();
           ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
           ctx.fill();
         });
-
         update();
         requestAnimationFrame(draw);
       }
@@ -224,7 +240,23 @@
 
       draw();
     }
+
+    function updateCountdown() {
+      const target = new Date("February 14, 2026 00:00:00");
+      const now = new Date();
+      const diff = target - now;
+
+      if (diff <= 0) return (document.getElementById("countdown").textContent = "It's Valentine's Day! 💖");
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+
+      document.getElementById("countdown").textContent =
+        `${days} days and ${hours} hours until Valentine's Day 💘`;
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
   </script>
 </body>
 </html>
-
