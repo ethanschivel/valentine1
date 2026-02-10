@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ethan Has a Question 💖</title>
 
   <style>
@@ -21,9 +22,10 @@
       background: white;
       padding: 35px;
       border-radius: 20px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
       width: 400px;
       z-index: 2;
+      position: relative;
     }
 
     img {
@@ -69,6 +71,7 @@
       font-size: 24px;
       animation: floatUp 5s linear infinite;
       opacity: 0.8;
+      pointer-events: none;
     }
 
     @keyframes floatUp {
@@ -81,12 +84,34 @@
         opacity: 0;
       }
     }
+
+    /* Confetti canvas */
+    #confetti {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      display: none;
+    }
   </style>
 </head>
+
 <body>
+  <!-- Hidden YouTube autoplay music -->
+  <iframe
+    width="0"
+    height="0"
+    src="https://www.youtube.com/embed/mANvg9R1xeI?autoplay=1&loop=1&playlist=mANvg9R1xeI"
+    frameborder="0"
+    allow="autoplay"
+  ></iframe>
+
+  <canvas id="confetti"></canvas>
 
   <div class="card" id="card">
-    <img src="patrick.gif" alt="Patrick Valentine">
+    <img src="patrick.gif" alt="Patrick Valentine" />
 
     <h1>Hi… I’m Ethan ⭐</h1>
     <div id="question">Will you be my Valentine? 💕</div>
@@ -100,6 +125,8 @@
     const noBtn = document.getElementById("noBtn");
     const question = document.getElementById("question");
     const card = document.getElementById("card");
+    const confettiCanvas = document.getElementById("confetti");
+    const ctx = confettiCanvas.getContext("2d");
 
     let yesSize = 18;
     let noClicks = 0;
@@ -109,7 +136,7 @@
       "Ethan is confused…",
       "That didn’t feel right 😢",
       "PLEASE??? ⭐",
-      "Okay now this hurts 😭"
+      "Okay now this hurts 😭",
     ];
 
     noBtn.addEventListener("click", () => {
@@ -120,7 +147,7 @@
       yesSize += 14;
       yesBtn.style.fontSize = yesSize + "px";
       yesBtn.style.padding =
-        (12 + yesSize / 3) + "px " + (25 + yesSize / 1.5) + "px";
+        12 + yesSize / 3 + "px " + (25 + yesSize / 1.5) + "px";
 
       if (yesSize > 80) {
         yesBtn.style.position = "fixed";
@@ -139,6 +166,8 @@
         <p>Ethan is VERY happy right now.</p>
         <p>You’re officially my Valentine ❤️</p>
       `;
+
+      startConfetti();
     });
 
     // Floating hearts
@@ -152,7 +181,50 @@
 
       setTimeout(() => heart.remove(), 5000);
     }, 300);
-  </script>
 
+    // 🎉 Confetti effect
+    function startConfetti() {
+      confettiCanvas.style.display = "block";
+      confettiCanvas.width = window.innerWidth;
+      confettiCanvas.height = window.innerHeight;
+
+      const pieces = Array.from({ length: 150 }).map(() => ({
+        x: Math.random() * confettiCanvas.width,
+        y:
+          Math.random() * confettiCanvas.height -
+          confettiCanvas.height,
+        r: Math.random() * 6 + 4,
+        d: Math.random() * 2 + 1,
+      }));
+
+      function draw() {
+        ctx.clearRect(
+          0,
+          0,
+          confettiCanvas.width,
+          confettiCanvas.height
+        );
+
+        pieces.forEach((p) => {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        update();
+        requestAnimationFrame(draw);
+      }
+
+      function update() {
+        pieces.forEach((p) => {
+          p.y += p.d;
+          if (p.y > confettiCanvas.height) p.y = -10;
+        });
+      }
+
+      draw();
+    }
+  </script>
 </body>
 </html>
+
