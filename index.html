@@ -26,6 +26,12 @@
       width: 400px;
       z-index: 2;
       position: relative;
+      animation: fadeIn 1.5s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
     }
 
     img {
@@ -34,15 +40,21 @@
       margin-bottom: 15px;
     }
 
-    h1 {
-      color: #ff4d6d;
-      margin-bottom: 10px;
+    .couplePhoto {
+      width: 100%;
+      border-radius: 15px;
+      margin-top: 15px;
+      opacity: 0;
+      animation: photoFade 2s ease forwards;
     }
 
-    #question {
-      font-size: 20px;
-      margin-bottom: 20px;
+    @keyframes photoFade {
+      to { opacity: 1; }
     }
+
+    h1 { color: #ff4d6d; margin-bottom: 10px; }
+
+    #question { font-size: 20px; margin-bottom: 20px; }
 
     button {
       padding: 12px 25px;
@@ -69,10 +81,10 @@
     .loveWord {
       position: fixed;
       top: 50%;
-      font-size: 20px;
+      font-size: 22px;
       color: #ff4d6d;
       opacity: 0;
-      animation: floatSide 4s ease-out forwards;
+      animation: floatSide 6s ease-out forwards;
       pointer-events: none;
       font-weight: bold;
     }
@@ -84,8 +96,9 @@
 
     @keyframes floatSide {
       0% { transform: translateY(-50%) scale(0.8); opacity: 0; }
-      20% { opacity: 1; }
-      100% { transform: translateY(-150%) scale(1.2); opacity: 0; }
+      15% { opacity: 1; }
+      85% { opacity: 1; }
+      100% { transform: translateY(-180%) scale(1.2); opacity: 0; }
     }
 
     #confetti {
@@ -98,11 +111,7 @@
       display: none;
     }
 
-    #countdown {
-      margin-top: 10px;
-      font-size: 16px;
-      color: #ff4d6d;
-    }
+    #countdown { margin-top: 10px; font-size: 16px; color: #ff4d6d; }
   </style>
 </head>
 
@@ -146,7 +155,7 @@
       "I think you clicked the wrong button Stink",
       "Put your glasses on",
       "You hate me?",
-      "Okay now this hurts ",
+      "Okay now this hurts",
     ];
 
     const loveWords = [
@@ -184,6 +193,7 @@
         <p>I knew you would say yes</p>
         <p>Happy valentines day stink</p>
         <p style="font-size:18px;">Put the volume UP 💕</p>
+        <img src="us.jpg" class="couplePhoto" alt="Us together" />
       `;
 
       const song = document.getElementById("song");
@@ -200,12 +210,12 @@
         el.className = "loveWord";
         el.textContent = word;
 
-        const side = i % 2 === 0 ? "10px" : "calc(100vw - 160px)";
+        const side = i % 2 === 0 ? "10px" : "calc(100vw - 180px)";
         el.style.left = side;
-        el.style.animationDelay = i * 0.4 + "s";
+        el.style.animationDelay = i * 0.6 + "s";
 
         document.body.appendChild(el);
-        setTimeout(() => el.remove(), 4000);
+        setTimeout(() => el.remove(), 6000);
       });
     }
 
