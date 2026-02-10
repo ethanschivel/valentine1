@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ethan Has a Question 💖</title>
+
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .card {
+      background: white;
+      padding: 35px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      width: 400px;
+      z-index: 2;
+    }
+
+    img {
+      width: 100%;
+      border-radius: 15px;
+      margin-bottom: 15px;
+    }
+
+    h1 {
+      color: #ff4d6d;
+      margin-bottom: 10px;
+    }
+
+    #question {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 12px 25px;
+      font-size: 18px;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      margin: 10px;
+      transition: all 0.25s ease;
+    }
+
+    #yesBtn {
+      background: #ff4d6d;
+      color: white;
+      z-index: 3;
+    }
+
+    #noBtn {
+      background: #ccc;
+    }
+
+    /* Floating hearts */
+    .heart {
+      position: absolute;
+      bottom: -20px;
+      font-size: 24px;
+      animation: floatUp 5s linear infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-110vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card" id="card">
+    <img src="patrick.gif" alt="Patrick Valentine">
+
+    <h1>Hi… I’m Ethan ⭐</h1>
+    <div id="question">Will you be my Valentine? 💕</div>
+
+    <button id="yesBtn">Yes 💖</button>
+    <button id="noBtn">No 😢</button>
+  </div>
+
+  <script>
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const question = document.getElementById("question");
+    const card = document.getElementById("card");
+
+    let yesSize = 18;
+    let noClicks = 0;
+
+    const noTexts = [
+      "Are you sure? 🥺",
+      "Ethan is confused…",
+      "That didn’t feel right 😢",
+      "PLEASE??? ⭐",
+      "Okay now this hurts 😭"
+    ];
+
+    noBtn.addEventListener("click", () => {
+      noClicks++;
+      question.textContent =
+        noTexts[Math.min(noClicks - 1, noTexts.length - 1)];
+
+      yesSize += 14;
+      yesBtn.style.fontSize = yesSize + "px";
+      yesBtn.style.padding =
+        (12 + yesSize / 3) + "px " + (25 + yesSize / 1.5) + "px";
+
+      if (yesSize > 80) {
+        yesBtn.style.position = "fixed";
+        yesBtn.style.top = "0";
+        yesBtn.style.left = "0";
+        yesBtn.style.width = "100vw";
+        yesBtn.style.height = "100vh";
+        yesBtn.style.borderRadius = "0";
+        yesBtn.textContent = "JUST SAY YES 💖";
+      }
+    });
+
+    yesBtn.addEventListener("click", () => {
+      card.innerHTML = `
+        <h1>YAYYYY 💘</h1>
+        <p>Ethan is VERY happy right now.</p>
+        <p>You’re officially my Valentine ❤️</p>
+      `;
+    });
+
+    // Floating hearts
+    setInterval(() => {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.textContent = "💖";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = Math.random() * 20 + 20 + "px";
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 5000);
+    }, 300);
+  </script>
+
+</body>
+</html>
