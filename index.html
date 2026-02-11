@@ -111,12 +111,6 @@
       display: none;
     }
 
-    #appleMusic {
-      display: none;
-      margin-top: 15px;
-      width: 100%;
-    }
-
     #countdown { margin-top: 10px; font-size: 16px; color: #ff4d6d; }
   </style>
 </head>
@@ -135,16 +129,6 @@
     <button id="noBtn">No 😢</button>
 
     <div id="countdown"></div>
-
-    <!-- Apple Music Embed (hidden until YES) -->
-    <div id="appleMusic">
-      <iframe allow="autoplay *; encrypted-media *;" frameborder="0" height="175"
-        style="width:100%; max-width:400px; overflow:hidden; border-radius:12px;"
-        sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
-        src="https://embed.music.apple.com/us/album/wgft-feat-burna-boy/1830597627?i=1830597940">
-      </iframe>
-    </div>
-
   </div>
 
   <script>
@@ -201,11 +185,17 @@
         <p>I knew you would say yes</p>
         <p>Happy valentines day stink</p>
         <p style="font-size:18px;">Put the volume UP 💕</p>
-        <img src="us.jpg" class="couplePhoto" alt="Us together" />
-      `;
 
-      // show the Apple Music player
-      document.getElementById("appleMusic").style.display = "block";
+        <img src="us.jpg" class="couplePhoto" alt="Us together" />
+
+        <div style="margin-top:15px;">
+          <iframe allow="autoplay *; encrypted-media *;" frameborder="0" height="175"
+            style="width:100%; max-width:400px; overflow:hidden; border-radius:12px;"
+            sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
+            src="https://embed.music.apple.com/us/album/wgft-feat-burna-boy/1830597627?i=1830597940">
+          </iframe>
+        </div>
+      `;
 
       startConfetti();
       heartExplosion();
@@ -305,6 +295,7 @@
       document.getElementById("countdown").textContent =
         `${days} days and ${hours} hours until Valentine's Day 💘`;
     }
+
     setInterval(updateCountdown, 1000);
     updateCountdown();
   </script>
