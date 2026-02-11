@@ -1,308 +1,316 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ethan Has a Question 💖</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ethan Has a Question 💖</title>
 
-  <style>
-    body {
-      margin: 0;
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      overflow: hidden;
-    }
+<style>
+body {
+  margin: 0;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  overflow: hidden;
+}
 
-    .card {
-      background: white;
-      padding: 35px;
-      border-radius: 20px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
-      width: 400px;
-      z-index: 2;
-      position: relative;
-      animation: fadeIn 1.5s ease forwards;
-    }
+/* ✅ RESPONSIVE CARD */
+.card {
+  background: white;
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.9); }
-      to { opacity: 1; transform: scale(1); }
-    }
+  width: 90vw;
+  max-width: 420px;
 
-    img {
-      width: 100%;
-      border-radius: 15px;
-      margin-bottom: 15px;
-    }
+  max-height: 90vh;
+  overflow-y: auto;
 
-    .couplePhoto {
-      width: 100%;
-      border-radius: 15px;
-      margin-top: 15px;
-      opacity: 0;
-      animation: photoFade 2s ease forwards;
-    }
+  position: relative;
+  animation: fadeIn 1.5s ease forwards;
+}
 
-    @keyframes photoFade { to { opacity: 1; } }
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
 
-    h1 { color: #ff4d6d; margin-bottom: 10px; }
+/* ✅ FIX HUGE IMAGES */
+img,
+.couplePhoto {
+  width: 100%;
+  max-height: 35vh;
+  object-fit: cover;
+  border-radius: 15px;
+  margin-bottom: 12px;
+}
 
-    #question { font-size: 20px; margin-bottom: 20px; }
+h1 { color: #ff4d6d; margin-bottom: 10px; }
+#question { font-size: 20px; margin-bottom: 20px; }
 
-    button {
-      padding: 12px 25px;
-      font-size: 18px;
-      border-radius: 30px;
-      border: none;
-      cursor: pointer;
-      margin: 10px;
-      transition: all 0.25s ease;
-    }
+button {
+  padding: 12px 25px;
+  font-size: 18px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  margin: 10px;
+  transition: all 0.25s ease;
+}
 
-    #yesBtn { background: #ff4d6d; color: white; z-index: 3; }
-    #noBtn { background: #ccc; }
+#yesBtn { background: #ff4d6d; color: white; z-index: 3; }
+#noBtn { background: #ccc; }
 
-    .heart {
-      position: absolute;
-      bottom: -20px;
-      font-size: 24px;
-      animation: floatUp 5s linear infinite;
-      opacity: 0.8;
-      pointer-events: none;
-    }
+/* FLOATING HEARTS */
+.heart {
+  position: absolute;
+  bottom: -20px;
+  font-size: 24px;
+  animation: floatUp 5s linear infinite;
+  opacity: 0.8;
+  pointer-events: none;
+}
 
-    .loveWord {
-      position: fixed;
-      top: 50%;
-      font-size: 22px;
-      color: #ff4d6d;
-      opacity: 0;
-      animation: floatSide 6s ease-out forwards;
-      pointer-events: none;
-      font-weight: bold;
-    }
+@keyframes floatUp {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-110vh); opacity: 0; }
+}
 
-    @keyframes floatUp {
-      0% { transform: translateY(0); opacity: 1; }
-      100% { transform: translateY(-110vh); opacity: 0; }
-    }
+/* LOVE WORDS */
+.loveWord {
+  position: fixed;
+  top: 50%;
+  font-size: 22px;
+  color: #ff4d6d;
+  opacity: 0;
+  animation: floatSide 6s ease-out forwards;
+  pointer-events: none;
+  font-weight: bold;
+}
 
-    @keyframes floatSide {
-      0% { transform: translateY(-50%) scale(0.8); opacity: 0; }
-      15% { opacity: 1; }
-      85% { opacity: 1; }
-      100% { transform: translateY(-180%) scale(1.2); opacity: 0; }
-    }
+@keyframes floatSide {
+  0% { transform: translateY(-50%) scale(0.8); opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translateY(-180%) scale(1.2); opacity: 0; }
+}
 
-    #confetti {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      display: none;
-    }
+#confetti {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  display: none;
+}
 
-    .musicNote {
-      margin-top: 10px;
-      font-size: 14px;
-      color: #666;
-    }
-
-    #countdown { margin-top: 10px; font-size: 16px; color: #ff4d6d; }
-  </style>
+.musicNote { margin-top: 10px; font-size: 14px; color: #666; }
+#countdown { margin-top: 10px; font-size: 16px; color: #ff4d6d; }
+</style>
 </head>
 
 <body>
 
-  <canvas id="confetti"></canvas>
+<canvas id="confetti"></canvas>
 
-  <div class="card" id="card">
-    <img src="patrick.gif" alt="Patrick Valentine" />
+<div class="card" id="card">
+  <img src="patrick.gif" alt="Patrick Valentine" />
 
-    <h1>Hi… I’m Ethan ⭐</h1>
-    <div id="question">Will you be my Valentine? 💕</div>
+  <h1>Hi… I’m Ethan ⭐</h1>
+  <div id="question">Will you be my Valentine? 💕</div>
 
-    <button id="yesBtn">Yes 💖</button>
-    <button id="noBtn">No 😢</button>
+  <button id="yesBtn">Yes 💖</button>
+  <button id="noBtn">No 😢</button>
 
-    <div id="countdown"></div>
-  </div>
+  <div id="countdown"></div>
+</div>
 
-  <script>
-    const yesBtn = document.getElementById("yesBtn");
-    const noBtn = document.getElementById("noBtn");
-    const question = document.getElementById("question");
-    const card = document.getElementById("card");
-    const confettiCanvas = document.getElementById("confetti");
-    const ctx = confettiCanvas.getContext("2d");
+<script>
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const question = document.getElementById("question");
+const card = document.getElementById("card");
+const confettiCanvas = document.getElementById("confetti");
+const ctx = confettiCanvas.getContext("2d");
 
-    let yesSize = 18;
-    let noClicks = 0;
+let yesSize = 18;
+let noClicks = 0;
 
-    const noTexts = [
-      "Are you sure? 🥺",
-      "I think you clicked the wrong button Stink",
-      "Put your glasses on",
-      "You hate me?",
-      "Okay now this hurts",
-    ];
+const noTexts = [
+  "Are you sure? 🥺",
+  "I think you clicked the wrong button Stink",
+  "Put your glasses on",
+  "You hate me?",
+  "Okay now this hurts",
+];
 
-    const loveWords = [
-      "I love you 💖",
-      "You're amazing ✨",
-      "My favorite person 💕",
-      "Forever us 💘",
-      "So lucky to have you 🥹",
-    ];
+const loveWords = [
+  "I love you 💖",
+  "You're amazing ✨",
+  "My favorite person 💕",
+  "Forever us 💘",
+  "So lucky to have you 🥹",
+];
 
-    noBtn.addEventListener("click", () => {
-      noClicks++;
-      question.textContent =
-        noTexts[Math.min(noClicks - 1, noTexts.length - 1)];
+noBtn.addEventListener("click", () => {
+  noClicks++;
+  question.textContent =
+    noTexts[Math.min(noClicks - 1, noTexts.length - 1)];
 
-      yesSize += 14;
-      yesBtn.style.fontSize = yesSize + "px";
-      yesBtn.style.padding =
-        12 + yesSize / 3 + "px " + (25 + yesSize / 1.5) + "px";
+  yesSize += 14;
+  yesBtn.style.fontSize = yesSize + "px";
+  yesBtn.style.padding =
+    12 + yesSize / 3 + "px " + (25 + yesSize / 1.5) + "px";
 
-      if (yesSize > 80) {
-        yesBtn.style.position = "fixed";
-        yesBtn.style.top = "0";
-        yesBtn.style.left = "0";
-        yesBtn.style.width = "100vw";
-        yesBtn.style.height = "100vh";
-        yesBtn.style.borderRadius = "0";
-        yesBtn.textContent = "JUST SAY YES 💖";
-      }
-    });
+  if (yesSize > 80) {
+    yesBtn.style.position = "fixed";
+    yesBtn.style.top = "0";
+    yesBtn.style.left = "0";
+    yesBtn.style.width = "100vw";
+    yesBtn.style.height = "100vh";
+    yesBtn.style.borderRadius = "0";
+    yesBtn.textContent = "JUST SAY YES 💖";
+  }
+});
 
-    yesBtn.addEventListener("click", () => {
-      card.innerHTML = `
-        <h1>YAYYYY 💘</h1>
-        <p>I knew you would say yes</p>
-        <p>Happy valentines day stink</p>
-        <p style="font-size:18px;">Tap play on our song 💕</p>
+yesBtn.addEventListener("click", () => {
+  card.innerHTML = `
+    <h1>YAYYYY 💘</h1>
+    <p>I knew you would say yes</p>
+    <p>Happy valentines day stink</p>
+    <p style="font-size:18px;">Tap play on our song 💕</p>
 
-        <img src="us.jpg" class="couplePhoto" alt="Us together" />
+    <img src="us.jpg" class="couplePhoto" alt="Us together" />
 
-        <div style="margin-top:15px;">
-          <iframe allow="autoplay *; encrypted-media *;" frameborder="0" height="175"
-            style="width:100%; max-width:400px; overflow:hidden; border-radius:12px;"
-            sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
-            src="https://embed.music.apple.com/us/album/wgft-feat-burna-boy/1830597627?i=1830597940">
-          </iframe>
-          <div class="musicNote">If the song doesn’t start, tap the play button above 🎵</div>
-        </div>
-      `;
+    <!-- ✅ BIG RESPONSIVE APPLE MUSIC PLAYER -->
+    <div style="margin-top:15px; width:100%; height:45vh;">
+      <iframe
+        allow="autoplay *; encrypted-media *;"
+        frameborder="0"
+        width="100%"
+        height="100%"
+        style="border-radius:12px;"
+        sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
+        src="https://embed.music.apple.com/us/album/wgft-feat-burna-boy/1830597627?i=1830597940">
+      </iframe>
+    </div>
 
-      startConfetti();
-      heartExplosion();
-      floatLoveWords();
-    });
+    <div class="musicNote">If the song doesn’t start, tap the play button above 🎵</div>
+  `;
 
-    function floatLoveWords() {
-      loveWords.forEach((word, i) => {
-        const el = document.createElement("div");
-        el.className = "loveWord";
-        el.textContent = word;
+  startConfetti();
+  heartExplosion();
+  floatLoveWords();
+});
 
-        const side = i % 2 === 0 ? "10px" : "calc(100vw - 180px)";
-        el.style.left = side;
-        el.style.animationDelay = i * 0.6 + "s";
+/* FLOAT LOVE WORDS */
+function floatLoveWords() {
+  loveWords.forEach((word, i) => {
+    const el = document.createElement("div");
+    el.className = "loveWord";
+    el.textContent = word;
+    el.style.left = i % 2 === 0 ? "10px" : "calc(100vw - 180px)";
+    el.style.animationDelay = i * 0.6 + "s";
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 6000);
+  });
+}
 
-        document.body.appendChild(el);
-        setTimeout(() => el.remove(), 6000);
-      });
-    }
+/* CONTINUOUS HEARTS */
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.textContent = "💖";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = Math.random() * 20 + 20 + "px";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 5000);
+}, 300);
 
-    setInterval(() => {
-      const heart = document.createElement("div");
-      heart.classList.add("heart");
-      heart.textContent = "💖";
+/* HEART EXPLOSION */
+function heartExplosion() {
+  for (let i = 0; i < 40; i++) {
+    const heart = document.createElement("div");
+    heart.textContent = "💖";
+    heart.style.position = "fixed";
+    heart.style.left = "50%";
+    heart.style.top = "50%";
+    heart.style.fontSize = "30px";
+    heart.style.transform = `translate(-50%, -50%) rotate(${Math.random()*360}deg)`;
+    heart.style.transition = "all 1s ease-out";
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
       heart.style.left = Math.random() * 100 + "vw";
-      heart.style.fontSize = Math.random() * 20 + 20 + "px";
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 5000);
-    }, 300);
+      heart.style.top = Math.random() * 100 + "vh";
+      heart.style.opacity = "0";
+    }, 10);
 
-    function heartExplosion() {
-      for (let i = 0; i < 40; i++) {
-        const heart = document.createElement("div");
-        heart.textContent = "💖";
-        heart.style.position = "fixed";
-        heart.style.left = "50%";
-        heart.style.top = "50%";
-        heart.style.fontSize = "30px";
-        heart.style.transform = `translate(-50%, -50%) rotate(${Math.random()*360}deg)`;
-        heart.style.transition = "all 1s ease-out";
-        document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 1000);
+  }
+}
 
-        setTimeout(() => {
-          heart.style.left = Math.random() * 100 + "vw";
-          heart.style.top = Math.random() * 100 + "vh";
-          heart.style.opacity = "0";
-        }, 10);
+/* CONFETTI */
+function startConfetti() {
+  confettiCanvas.style.display = "block";
+  confettiCanvas.width = window.innerWidth;
+  confettiCanvas.height = window.innerHeight;
 
-        setTimeout(() => heart.remove(), 1000);
-      }
-    }
+  const pieces = Array.from({ length: 150 }).map(() => ({
+    x: Math.random() * confettiCanvas.width,
+    y: Math.random() * confettiCanvas.height - confettiCanvas.height,
+    r: Math.random() * 6 + 4,
+    d: Math.random() * 2 + 1,
+  }));
 
-    function startConfetti() {
-      confettiCanvas.style.display = "block";
-      confettiCanvas.width = window.innerWidth;
-      confettiCanvas.height = window.innerHeight;
+  function draw() {
+    ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+    pieces.forEach((p) => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
+    });
+    update();
+    requestAnimationFrame(draw);
+  }
 
-      const pieces = Array.from({ length: 150 }).map(() => ({
-        x: Math.random() * confettiCanvas.width,
-        y: Math.random() * confettiCanvas.height - confettiCanvas.height,
-        r: Math.random() * 6 + 4,
-        d: Math.random() * 2 + 1,
-      }));
+  function update() {
+    pieces.forEach((p) => {
+      p.y += p.d;
+      if (p.y > confettiCanvas.height) p.y = -10;
+    });
+  }
 
-      function draw() {
-        ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
-        pieces.forEach((p) => {
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctx.fill();
-        });
-        update();
-        requestAnimationFrame(draw);
-      }
+  draw();
+}
 
-      function update() {
-        pieces.forEach((p) => {
-          p.y += p.d;
-          if (p.y > confettiCanvas.height) p.y = -10;
-        });
-      }
+/* COUNTDOWN */
+function updateCountdown() {
+  const target = new Date("February 14, 2026 00:00:00");
+  const now = new Date();
+  const diff = target - now;
 
-      draw();
-    }
+  if (diff <= 0) {
+    document.getElementById("countdown").textContent = "It's Valentine's Day! 💖";
+    return;
+  }
 
-    function updateCountdown() {
-      const target = new Date("February 14, 2026 00:00:00");
-      const now = new Date();
-      const diff = target - now;
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
 
-      if (diff <= 0) return (document.getElementById("countdown").textContent = "It's Valentine's Day! 💖");
+  document.getElementById("countdown").textContent =
+    `${days} days and ${hours} hours until Valentine's Day 💘`;
+}
 
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+setInterval(updateCountdown, 1000);
+updateCountdown();
+</script>
 
-      document.getElementById("countdown").textContent =
-        `${days} days and ${hours} hours until Valentine's Day 💘`;
-    }
-
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
-  </script>
 </body>
 </html>
