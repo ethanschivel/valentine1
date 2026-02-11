@@ -18,19 +18,15 @@ body {
   overflow: hidden;
 }
 
-/* ✅ RESPONSIVE CARD */
 .card {
   background: white;
   padding: 25px;
   border-radius: 20px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
-
   width: 90vw;
   max-width: 420px;
-
   max-height: 90vh;
   overflow-y: auto;
-
   position: relative;
   animation: fadeIn 1.5s ease forwards;
 }
@@ -40,9 +36,7 @@ body {
   to { opacity: 1; transform: scale(1); }
 }
 
-/* ✅ FIX HUGE IMAGES */
-img,
-.couplePhoto {
+img, .couplePhoto {
   width: 100%;
   max-height: 35vh;
   object-fit: cover;
@@ -63,10 +57,9 @@ button {
   transition: all 0.25s ease;
 }
 
-#yesBtn { background: #ff4d6d; color: white; z-index: 3; }
+#yesBtn { background: #ff4d6d; color: white; }
 #noBtn { background: #ccc; }
 
-/* FLOATING HEARTS */
 .heart {
   position: absolute;
   bottom: -20px;
@@ -81,7 +74,6 @@ button {
   100% { transform: translateY(-110vh); opacity: 0; }
 }
 
-/* LOVE WORDS */
 .loveWord {
   position: fixed;
   top: 50%;
@@ -121,13 +113,10 @@ button {
 
 <div class="card" id="card">
   <img src="patrick.gif" alt="Patrick Valentine" />
-
   <h1>Hi… I’m Ethan ⭐</h1>
   <div id="question">Will you be my Valentine? 💕</div>
-
   <button id="yesBtn">Yes 💖</button>
   <button id="noBtn">No 😢</button>
-
   <div id="countdown"></div>
 </div>
 
@@ -167,41 +156,30 @@ noBtn.addEventListener("click", () => {
   yesBtn.style.fontSize = yesSize + "px";
   yesBtn.style.padding =
     12 + yesSize / 3 + "px " + (25 + yesSize / 1.5) + "px";
-
-  if (yesSize > 80) {
-    yesBtn.style.position = "fixed";
-    yesBtn.style.top = "0";
-    yesBtn.style.left = "0";
-    yesBtn.style.width = "100vw";
-    yesBtn.style.height = "100vh";
-    yesBtn.style.borderRadius = "0";
-    yesBtn.textContent = "JUST SAY YES 💖";
-  }
 });
 
 yesBtn.addEventListener("click", () => {
   card.innerHTML = `
     <h1>YAYYYY 💘</h1>
     <p>I knew you would say yes</p>
-    <p>Happy valentines day stink</p>
-    <p style="font-size:18px;">Tap play on our song 💕</p>
+    <p>Happy Valentine's Day 💕</p>
 
     <img src="us.jpg" class="couplePhoto" alt="Us together" />
 
-    <!-- ✅ BIG RESPONSIVE APPLE MUSIC PLAYER -->
+    <!-- 🎵 YOUTUBE PLAYER -->
     <div style="margin-top:15px; width:100%; height:45vh;">
-      <iframe
-        allow="autoplay *; encrypted-media *;"
-        frameborder="0"
-        width="100%"
-        height="100%"
-        style="border-radius:12px;"
-        sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
-        src="https://embed.music.apple.com/us/album/wgft-feat-burna-boy/1830597627?i=1830597940">
+      <iframe 
+        width="100%" 
+        height="100%" 
+        src="https://www.youtube.com/embed/mANvg9R1xeI?autoplay=1&controls=1" 
+        title="YouTube video player"
+        frameborder="0" 
+        allow="autoplay; encrypted-media" 
+        allowfullscreen
+        style="border-radius:12px;">
       </iframe>
     </div>
-
-    <div class="musicNote">If the song doesn’t start, tap the play button above 🎵</div>
+    <div class="musicNote">Our song is playing 💖</div>
   `;
 
   startConfetti();
@@ -209,7 +187,6 @@ yesBtn.addEventListener("click", () => {
   floatLoveWords();
 });
 
-/* FLOAT LOVE WORDS */
 function floatLoveWords() {
   loveWords.forEach((word, i) => {
     const el = document.createElement("div");
@@ -222,7 +199,6 @@ function floatLoveWords() {
   });
 }
 
-/* CONTINUOUS HEARTS */
 setInterval(() => {
   const heart = document.createElement("div");
   heart.classList.add("heart");
@@ -233,7 +209,6 @@ setInterval(() => {
   setTimeout(() => heart.remove(), 5000);
 }, 300);
 
-/* HEART EXPLOSION */
 function heartExplosion() {
   for (let i = 0; i < 40; i++) {
     const heart = document.createElement("div");
@@ -242,7 +217,7 @@ function heartExplosion() {
     heart.style.left = "50%";
     heart.style.top = "50%";
     heart.style.fontSize = "30px";
-    heart.style.transform = `translate(-50%, -50%) rotate(${Math.random()*360}deg)`;
+    heart.style.transform = \`translate(-50%, -50%) rotate(\${Math.random()*360}deg)\`;
     heart.style.transition = "all 1s ease-out";
     document.body.appendChild(heart);
 
@@ -256,7 +231,6 @@ function heartExplosion() {
   }
 }
 
-/* CONFETTI */
 function startConfetti() {
   confettiCanvas.style.display = "block";
   confettiCanvas.width = window.innerWidth;
@@ -290,7 +264,6 @@ function startConfetti() {
   draw();
 }
 
-/* COUNTDOWN */
 function updateCountdown() {
   const target = new Date("February 14, 2026 00:00:00");
   const now = new Date();
@@ -305,12 +278,11 @@ function updateCountdown() {
   const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
 
   document.getElementById("countdown").textContent =
-    `${days} days and ${hours} hours until Valentine's Day 💘`;
+    \`\${days} days and \${hours} hours until Valentine's Day 💘\`;
 }
 
 setInterval(updateCountdown, 1000);
 updateCountdown();
 </script>
-
 </body>
 </html>
