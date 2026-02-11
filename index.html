@@ -18,15 +18,19 @@ body {
   overflow: hidden;
 }
 
+/* CARD FITS ANY SCREEN */
 .card {
   background: white;
-  padding: 25px;
+  padding: 20px;
   border-radius: 20px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+
   width: 90vw;
   max-width: 420px;
+
   max-height: 90vh;
   overflow-y: auto;
+
   position: relative;
   animation: fadeIn 1.5s ease forwards;
 }
@@ -36,80 +40,40 @@ body {
   to { opacity: 1; transform: scale(1); }
 }
 
+/* SMALL IMAGES THAT NEVER GO OFF SCREEN */
 img, .couplePhoto {
   width: 100%;
-  max-height: 35vh;
+  max-height: 28vh;
   object-fit: cover;
   border-radius: 15px;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
-h1 { color: #ff4d6d; margin-bottom: 10px; }
-#question { font-size: 20px; margin-bottom: 20px; }
+h1 { color: #ff4d6d; margin-bottom: 8px; }
+#question { font-size: 20px; margin-bottom: 15px; }
 
 button {
-  padding: 12px 25px;
+  padding: 12px 22px;
   font-size: 18px;
   border-radius: 30px;
   border: none;
   cursor: pointer;
-  margin: 10px;
+  margin: 8px;
   transition: all 0.25s ease;
 }
 
 #yesBtn { background: #ff4d6d; color: white; }
 #noBtn { background: #ccc; }
 
-.heart {
-  position: absolute;
-  bottom: -20px;
-  font-size: 24px;
-  animation: floatUp 5s linear infinite;
-  opacity: 0.8;
-  pointer-events: none;
+.musicNote {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #666;
 }
-
-@keyframes floatUp {
-  0% { transform: translateY(0); opacity: 1; }
-  100% { transform: translateY(-110vh); opacity: 0; }
-}
-
-.loveWord {
-  position: fixed;
-  top: 50%;
-  font-size: 22px;
-  color: #ff4d6d;
-  opacity: 0;
-  animation: floatSide 6s ease-out forwards;
-  pointer-events: none;
-  font-weight: bold;
-}
-
-@keyframes floatSide {
-  0% { transform: translateY(-50%) scale(0.8); opacity: 0; }
-  15% { opacity: 1; }
-  85% { opacity: 1; }
-  100% { transform: translateY(-180%) scale(1.2); opacity: 0; }
-}
-
-#confetti {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  display: none;
-}
-
-.musicNote { margin-top: 10px; font-size: 14px; color: #666; }
-#countdown { margin-top: 10px; font-size: 16px; color: #ff4d6d; }
 </style>
 </head>
 
 <body>
-
-<canvas id="confetti"></canvas>
 
 <div class="card" id="card">
   <img src="patrick.gif" alt="Patrick Valentine" />
@@ -117,7 +81,6 @@ button {
   <div id="question">Will you be my Valentine? 💕</div>
   <button id="yesBtn">Yes 💖</button>
   <button id="noBtn">No 😢</button>
-  <div id="countdown"></div>
 </div>
 
 <script>
@@ -125,26 +88,16 @@ const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
 const question = document.getElementById("question");
 const card = document.getElementById("card");
-const confettiCanvas = document.getElementById("confetti");
-const ctx = confettiCanvas.getContext("2d");
 
 let yesSize = 18;
 let noClicks = 0;
 
 const noTexts = [
   "Are you sure? 🥺",
-  "I think you clicked the wrong button Stink",
-  "Put your glasses on",
-  "You hate me?",
-  "Okay now this hurts",
-];
-
-const loveWords = [
-  "I love you 💖",
-  "You're amazing ✨",
-  "My favorite person 💕",
-  "Forever us 💘",
-  "So lucky to have you 🥹",
+  "I think you clicked the wrong button",
+  "Put your glasses on 😂",
+  "You hate me? 😢",
+  "Okay now this hurts…"
 ];
 
 noBtn.addEventListener("click", () => {
@@ -152,12 +105,13 @@ noBtn.addEventListener("click", () => {
   question.textContent =
     noTexts[Math.min(noClicks - 1, noTexts.length - 1)];
 
-  yesSize += 14;
+  yesSize += 12;
   yesBtn.style.fontSize = yesSize + "px";
   yesBtn.style.padding =
-    12 + yesSize / 3 + "px " + (25 + yesSize / 1.5) + "px";
+    12 + yesSize / 3 + "px " + (22 + yesSize / 1.5) + "px";
 });
 
+/* YES CLICK → SHOW SMALL IMAGE + APPLE MUSIC */
 yesBtn.addEventListener("click", () => {
   card.innerHTML = `
     <h1>YAYYYY 💘</h1>
@@ -166,123 +120,23 @@ yesBtn.addEventListener("click", () => {
 
     <img src="us.jpg" class="couplePhoto" alt="Us together" />
 
-    <!-- 🎵 YOUTUBE PLAYER -->
-    <div style="margin-top:15px; width:100%; height:45vh;">
-      <iframe 
-        width="100%" 
-        height="100%" 
-        src="https://www.youtube.com/embed/mANvg9R1xeI?autoplay=1&controls=1" 
-        title="YouTube video player"
-        frameborder="0" 
-        allow="autoplay; encrypted-media" 
-        allowfullscreen
-        style="border-radius:12px;">
+    <!-- APPLE MUSIC PLAYER THAT FITS SCREEN -->
+    <div style="margin-top:10px; width:100%; height:38vh;">
+      <iframe
+        allow="autoplay *; encrypted-media *;"
+        frameborder="0"
+        width="100%"
+        height="100%"
+        style="border-radius:12px;"
+        sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
+        src="https://embed.music.apple.com/us/album/wgft-feat-burna-boy/1830597627?i=1830597940">
       </iframe>
     </div>
-    <div class="musicNote">Our song is playing 💖</div>
+
+    <div class="musicNote">Tap play to hear our song 💖</div>
   `;
-
-  startConfetti();
-  heartExplosion();
-  floatLoveWords();
 });
-
-function floatLoveWords() {
-  loveWords.forEach((word, i) => {
-    const el = document.createElement("div");
-    el.className = "loveWord";
-    el.textContent = word;
-    el.style.left = i % 2 === 0 ? "10px" : "calc(100vw - 180px)";
-    el.style.animationDelay = i * 0.6 + "s";
-    document.body.appendChild(el);
-    setTimeout(() => el.remove(), 6000);
-  });
-}
-
-setInterval(() => {
-  const heart = document.createElement("div");
-  heart.classList.add("heart");
-  heart.textContent = "💖";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.fontSize = Math.random() * 20 + 20 + "px";
-  document.body.appendChild(heart);
-  setTimeout(() => heart.remove(), 5000);
-}, 300);
-
-function heartExplosion() {
-  for (let i = 0; i < 40; i++) {
-    const heart = document.createElement("div");
-    heart.textContent = "💖";
-    heart.style.position = "fixed";
-    heart.style.left = "50%";
-    heart.style.top = "50%";
-    heart.style.fontSize = "30px";
-    heart.style.transform = \`translate(-50%, -50%) rotate(\${Math.random()*360}deg)\`;
-    heart.style.transition = "all 1s ease-out";
-    document.body.appendChild(heart);
-
-    setTimeout(() => {
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.top = Math.random() * 100 + "vh";
-      heart.style.opacity = "0";
-    }, 10);
-
-    setTimeout(() => heart.remove(), 1000);
-  }
-}
-
-function startConfetti() {
-  confettiCanvas.style.display = "block";
-  confettiCanvas.width = window.innerWidth;
-  confettiCanvas.height = window.innerHeight;
-
-  const pieces = Array.from({ length: 150 }).map(() => ({
-    x: Math.random() * confettiCanvas.width,
-    y: Math.random() * confettiCanvas.height - confettiCanvas.height,
-    r: Math.random() * 6 + 4,
-    d: Math.random() * 2 + 1,
-  }));
-
-  function draw() {
-    ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
-    pieces.forEach((p) => {
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fill();
-    });
-    update();
-    requestAnimationFrame(draw);
-  }
-
-  function update() {
-    pieces.forEach((p) => {
-      p.y += p.d;
-      if (p.y > confettiCanvas.height) p.y = -10;
-    });
-  }
-
-  draw();
-}
-
-function updateCountdown() {
-  const target = new Date("February 14, 2026 00:00:00");
-  const now = new Date();
-  const diff = target - now;
-
-  if (diff <= 0) {
-    document.getElementById("countdown").textContent = "It's Valentine's Day! 💖";
-    return;
-  }
-
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-
-  document.getElementById("countdown").textContent =
-    \`\${days} days and \${hours} hours until Valentine's Day 💘\`;
-}
-
-setInterval(updateCountdown, 1000);
-updateCountdown();
 </script>
+
 </body>
 </html>
